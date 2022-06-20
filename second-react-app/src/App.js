@@ -34,6 +34,16 @@ function App() {
       }
     ]);
 
+    window.localStorage.setItem('tarefas', JSON.stringify([
+      ...tarefas,
+      {
+        id:new Date().getTime(),
+        tarefa: tarefa.value,
+        finalizada: false
+
+      }
+    ]));
+
     setModal(false);
   }
 
@@ -50,10 +60,15 @@ function App() {
     })
 
     setarTarefas(novasTarefas);
+    window.localStorage.setItem('tarefas', JSON.stringify(novasTarefas));
   }
 
   useEffect(()=>{
     //fazer uma chamada para API e preencher o estado tarefas.
+    if(window.localStorage.getItem('tarefas') != undefined){
+      setarTarefas(JSON.parse(window.localStorage.getItem('tarefas')));
+        console.log(window.localStorage.getItem('tarefas'));
+    }
   },[])
 
   return (
